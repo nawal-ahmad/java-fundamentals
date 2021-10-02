@@ -3,16 +3,36 @@
  */
 package basiclibrary;
 
+import java.awt.image.ImageProducer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Library {
     public static void main(String[] args) {
         System.out.println();
+//        int[][] weeklyMonthTemperatures = {
+//                {66, 64, 58, 65, 71, 57, 60},
+//                {57, 65, 65, 70, 72, 65, 51},
+//                {55, 54, 60, 53, 59, 57, 61},
+//                {65, 56, 55, 52, 55, 62, 57}
+//        };
+//        System.out.println(analyzingWeatherData(weeklyMonthTemperatures));
+//        List<String> votes = new ArrayList<>();
+//        votes.add("Bush");
+//        votes.add("Bush");
+//        votes.add("Bush");
+//        votes.add("Shrub");
+//        votes.add("Nawal");
+//        votes.add("Nawal");
+//        votes.add("NAwal");
+//        votes.add("Nawal");
+//        votes.add("Nawal");
+//
+//
+//        String winner = tally(votes);
+//        System.out.println(winner + " received the most votes!");
+
     }
     public int[] roll(int n) {
         int[] dice = {1, 2, 3, 4, 5, 6};
@@ -63,56 +83,55 @@ public class Library {
         return array[requiredIndex];
     }
 
-    public static String analyzingWeatherData(int[][] arr) {
-        HashSet<Integer> uniqueTemps = new HashSet<>();
-        HashSet<Integer> temps = new HashSet<>();
 
+    public static String analyzingWeatherData(int[][] arr){
+        HashSet<Integer> temps = new HashSet<>();
         int min = arr[0][0];
-        int max = arr[0][0];
+        int max =arr[0][0];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                uniqueTemps.add(arr[i][j]);
-                if (arr[i][j] < min)
-                    min = arr[i][j];
-                if (arr[i][j] > max)
-                    max = arr[i][j];
-            }
-            temps.add(i);
-        }
-
-        String message = "";
-        message = message + "High: " + max + "\n" + "Low: " + min + "\n";
-
-        for (Integer temp : temps) {
-            if (!uniqueTemps.contains(temp)) {
-                message = message + "Never saw temperature: " + temp + "\n";
+                temps.add(arr[i][j]);
+                if(arr[i][j]>max){
+                    max=arr[i][j];
+                }
+                if (arr[i][j]<min){
+                    min=arr[i][j];
+                }
+                temps.add(arr[i][j]);
             }
         }
-        return message;
+        String neverSaw="";
+        System.out.println("High: "+ max);
+        System.out.println("Low: "+ min);
+        for (int i = min; i < max; i++) {
+            if (!temps.contains(i)){
+                neverSaw = neverSaw + ("Never saw temperature:" + i) +"\n";
+            }
+        }
+        System.out.println(neverSaw);
+        return neverSaw;
+
     }
 
+
     public static String tally(List<String> votes){
-        HashSet<String> uniques = new HashSet<>(votes);
-        HashMap<String, Integer> hashList = new HashMap<>();
-
-        for(String item : uniques){
-            hashList.put(item,0);
+        HashMap<String,Integer> votesList = new HashMap<String,Integer>();
+        // Insert all votes in hashmap
+        for (String vote : votes) {
+            if(votesList.keySet().contains((vote))){
+                votesList.put(vote,votesList.get(vote)+1);
+            }else
+                votesList.put(vote, 1);
         }
-
-        for (String vote : votes){
-            if (hashList.containsKey(vote)){
-                Integer x = hashList.get(vote);
-                x++;
-                hashList.put(vote,x);
-            };
-        }
-
-        int counter = 0;
-        String winner = "none";
-        for(String item : uniques){
-            if(hashList.get(item) > counter ){
-                counter = hashList.get(item);
-                winner = item;
+        // looping through votes to find max votes
+        int maxVote=0;
+        String winner="";
+        for(Map.Entry<String,Integer> entry: votesList.entrySet()){
+            String key = entry.getKey();
+            Integer val = entry.getValue();
+            if(val>maxVote){
+                maxVote = val;
+                winner = key;
             }
         }
         return winner;
