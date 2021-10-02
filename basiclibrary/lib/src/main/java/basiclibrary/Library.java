@@ -5,6 +5,8 @@ package basiclibrary;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +19,7 @@ public class Library {
         int[] arr = new int[n];
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            int randomIndex = random.nextInt(5);
+            int randomIndex = random.nextInt(6);
             arr[i] = dice[randomIndex];
         }
         return arr;
@@ -43,13 +45,12 @@ public class Library {
     }
 
     public int[] lowestAverage(int[][] array) {
-        int sum = 0;
         float prevAvg;
         float avg = 0;
         int requiredIndex = 0;
         for (int i = 0; i < array.length; i++) {
             prevAvg = avg;
-            sum = 0;
+            int sum = 0;
             for (int j = 0; j < array[i].length; j++) {
                 sum = sum + array[i][j];
             }
@@ -60,6 +61,61 @@ public class Library {
 
         }
         return array[requiredIndex];
+    }
+
+    public static String analyzingWeatherData(int[][] arr) {
+        HashSet<Integer> uniqueTemps = new HashSet<>();
+        HashSet<Integer> temps = new HashSet<>();
+
+        int min = arr[0][0];
+        int max = arr[0][0];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                uniqueTemps.add(arr[i][j]);
+                if (arr[i][j] < min)
+                    min = arr[i][j];
+                if (arr[i][j] > max)
+                    max = arr[i][j];
+            }
+            temps.add(i);
+        }
+
+        String message = "";
+        message = message + "High: " + max + "\n" + "Low: " + min + "\n";
+
+        for (Integer temp : temps) {
+            if (!uniqueTemps.contains(temp)) {
+                message = message + "Never saw temperature: " + temp + "\n";
+            }
+        }
+        return message;
+    }
+
+    public static String tally(List<String> votes){
+        HashSet<String> uniques = new HashSet<>(votes);
+        HashMap<String, Integer> hashList = new HashMap<>();
+
+        for(String item : uniques){
+            hashList.put(item,0);
+        }
+
+        for (String vote : votes){
+            if (hashList.containsKey(vote)){
+                Integer x = hashList.get(vote);
+                x++;
+                hashList.put(vote,x);
+            };
+        }
+
+        int counter = 0;
+        String winner = "none";
+        for(String item : uniques){
+            if(hashList.get(item) > counter ){
+                counter = hashList.get(item);
+                winner = item;
+            }
+        }
+        return winner;
     }
 }
 
