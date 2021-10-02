@@ -6,7 +6,9 @@ package linter;
 import org.checkerframework.checker.units.qual.A;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class App {
@@ -15,27 +17,26 @@ public class App {
     }
     public static void main(String[] args) {
         Path path = Path.of("app/src/main/resources/gate.js");
-        App newApp = new App();
-        System.out.println(newApp.linter(path));
+//        Path path = Paths.get("gates.js");
+        System.out.println(linter(path));
     }
-    public String linter(Path path) {
-        int counter = 0;
-        StringBuilder errorLine = new StringBuilder();
-        try {
-            File myFile = new File(path.toUri());
-            Scanner scanner = new Scanner(myFile);
 
-            while (scanner.hasNextLine()) {
-                counter++;
-                String data = scanner.nextLine();
-                if (!data.endsWith(";") && !data.endsWith("}") && !data.endsWith("{") && !data.contains("else") && !data.contains("if") && !data.isEmpty() || data.contains("return") && !data.endsWith(";")) {
-                    errorLine.append("Line ").append(counter).append(" : Missing semicolon.\n");
+    public static String linter(Path path){
+        String errMsg ="";
+        try {
+            List<String> fileLines = Files.readAllLines(path);
+            for (int i = 0; i < fileLines.size(); i++) {
+                if(!fileLines.get(i).endsWith(";")){
+                    if(!(fileLines.get(i).isBlank() || fileLines.get(i).endsWith("{") || fileLines.get(i).endsWith("}")|| fileLines.get(i).contains("if")||fileLines.get(i).contains("else"))) {
+                        errMsg = errMsg + "Line "+ (i+1) +": Missing semicolon.\n";
+                    }
                 }
             }
-            scanner.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
-        return errorLine.toString();
+        catch (IOException exception){
+            System.out.println("");
+        }
+        return  errMsg;
     }
+
 }
