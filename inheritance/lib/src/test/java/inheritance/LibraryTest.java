@@ -9,19 +9,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class LibraryTest {
     @Test void restaurantTesting(){
         Restaurant BurgerMaker = new Restaurant("BurgerMaker",5);
+        //toString method in Restaurant class is working properly.
+        assertEquals(BurgerMaker.toString(),"Restaurant{Name='"+BurgerMaker.getName()+"',Rate of stars=0,Prices Category=$$$$$, reviewsList=[]}");
         assertNotNull(BurgerMaker,"ensure that Restaurant class work properly");
         assertEquals(5,BurgerMaker.getPriceCat());
     }
     @Test
     void reviewsTesting() {
-        Restaurant res1 = new Restaurant("res1", 5);
+        Restaurant BurgerMaker = new Restaurant("BurgerMaker",5);
         Review rev1=new Review("Ahmad", "Perfect",5);
         Review rev2=new Review("Sam", "bad",1);
-        res1.addReview(rev1);
-        res1.addReview(rev2);
+        BurgerMaker.addReview(rev1);
+        BurgerMaker.addReview(rev2);
         assertEquals(rev1.getAuthor(),"Ahmad");
-        assertEquals(res1.getStars(),3);
+        assertEquals(BurgerMaker.getStars(),3);
+        //toString method in Review class is working properly.
+        assertEquals(rev1.toString(),"Review{Author='Ahmad',Review body='Perfect',Rate of stars=5}");
+        //toString method after update 5+1/2
+        assertEquals(BurgerMaker.getStars(),3);
+        //toString after addReview
+        assertEquals(BurgerMaker.toString(),"Restaurant{Name='BurgerMaker',Rate of stars=3,Prices Category=$$$$$, reviewsList=[Review{Author='Ahmad',Review body='Perfect',Rate of stars=5}, Review{Author='Sam',Review body='bad',Rate of stars=1}]}");
 
+
+        // For multiple Restaurant and Reviews
         Restaurant res2 = new Restaurant("res2", 3);
         Review rev3=new Review("Nahla", "worst",1);
         Review rev4=new Review("Hana", "bad",1);

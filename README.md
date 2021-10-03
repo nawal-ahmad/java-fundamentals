@@ -16,3 +16,8 @@ Nawal Ahmad Abu-alShaik
 - lowestAverage(int[][] array)
 - analyzingWeatherData(int[][] arr)
 - tally(List<String> votes)
+
+**inheritance**
+- Restaurant class
+- Review class
+- addReview method
