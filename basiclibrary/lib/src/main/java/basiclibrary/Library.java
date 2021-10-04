@@ -3,21 +3,43 @@
  */
 package basiclibrary;
 
+import java.awt.image.ImageProducer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Library {
     public static void main(String[] args) {
         System.out.println();
+//        int[][] weeklyMonthTemperatures = {
+//                {66, 64, 58, 65, 71, 57, 60},
+//                {57, 65, 65, 70, 72, 65, 51},
+//                {55, 54, 60, 53, 59, 57, 61},
+//                {65, 56, 55, 52, 55, 62, 57}
+//        };
+//        System.out.println(analyzingWeatherData(weeklyMonthTemperatures));
+//        List<String> votes = new ArrayList<>();
+//        votes.add("Bush");
+//        votes.add("Bush");
+//        votes.add("Bush");
+//        votes.add("Shrub");
+//        votes.add("Nawal");
+//        votes.add("Nawal");
+//        votes.add("NAwal");
+//        votes.add("Nawal");
+//        votes.add("Nawal");
+//
+//
+//        String winner = tally(votes);
+//        System.out.println(winner + " received the most votes!");
+
     }
     public int[] roll(int n) {
         int[] dice = {1, 2, 3, 4, 5, 6};
         int[] arr = new int[n];
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            int randomIndex = random.nextInt(5);
+            int randomIndex = random.nextInt(6);
             arr[i] = dice[randomIndex];
         }
         return arr;
@@ -43,13 +65,12 @@ public class Library {
     }
 
     public int[] lowestAverage(int[][] array) {
-        int sum = 0;
         float prevAvg;
         float avg = 0;
         int requiredIndex = 0;
         for (int i = 0; i < array.length; i++) {
             prevAvg = avg;
-            sum = 0;
+            int sum = 0;
             for (int j = 0; j < array[i].length; j++) {
                 sum = sum + array[i][j];
             }
@@ -60,6 +81,60 @@ public class Library {
 
         }
         return array[requiredIndex];
+    }
+
+
+    public static String analyzingWeatherData(int[][] arr){
+        HashSet<Integer> temps = new HashSet<>();
+        int min = arr[0][0];
+        int max =arr[0][0];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                temps.add(arr[i][j]);
+                if(arr[i][j]>max){
+                    max=arr[i][j];
+                }
+                if (arr[i][j]<min){
+                    min=arr[i][j];
+                }
+                temps.add(arr[i][j]);
+            }
+        }
+        String neverSaw="";
+        System.out.println("High: "+ max);
+        System.out.println("Low: "+ min);
+        for (int i = min; i < max; i++) {
+            if (!temps.contains(i)){
+                neverSaw = neverSaw + ("Never saw temperature:" + i) +"\n";
+            }
+        }
+        System.out.println(neverSaw);
+        return neverSaw;
+
+    }
+
+
+    public static String tally(List<String> votes){
+        HashMap<String,Integer> votesList = new HashMap<String,Integer>();
+        // Insert all votes in hashmap
+        for (String vote : votes) {
+            if(votesList.keySet().contains((vote))){
+                votesList.put(vote,votesList.get(vote)+1);
+            }else
+                votesList.put(vote, 1);
+        }
+        // looping through votes to find max votes
+        int maxVote=0;
+        String winner="";
+        for(Map.Entry<String,Integer> entry: votesList.entrySet()){
+            String key = entry.getKey();
+            Integer val = entry.getValue();
+            if(val>maxVote){
+                maxVote = val;
+                winner = key;
+            }
+        }
+        return winner;
     }
 }
 
