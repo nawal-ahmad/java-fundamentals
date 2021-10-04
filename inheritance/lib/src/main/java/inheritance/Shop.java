@@ -1,6 +1,8 @@
 package inheritance;
 
-public class Shop {
+import java.util.ArrayList;
+
+public class Shop extends ReviewForm {
     private String name;
     private String desc;
     private int dollarSigns;
@@ -9,6 +11,7 @@ public class Shop {
         this.name = name;
         this.desc = desc;
         this.dollarSigns = dollarSigns;
+        this.reviews = new ArrayList<Review>();
     }
 
 
@@ -47,7 +50,9 @@ public class Shop {
         return "Shop{" +
                 "name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
-                ", dollarSigns=" + dollarSigns +
+                ", dollarSigns=" + dollarSigns +'\'' +
+                ", rstars="+ stars + '\'' +
+                ", reviews=" + reviews +
                 '}';
     }
 }

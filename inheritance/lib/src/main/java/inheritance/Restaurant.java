@@ -2,7 +2,7 @@ package inheritance;
 
 import java.util.ArrayList;
 
-public class Restaurant {
+public class Restaurant extends ReviewForm{
     private String name;
     private int stars;
     private int priceCat;
@@ -11,13 +11,7 @@ public class Restaurant {
     public Restaurant(String name, int priceCat) {
         this.name = name;
         this.priceCat = priceCat;
-    }
-
-    float starsSum = 0;
-    public void addReview(Review review) {
-        this.reviews.add(review);
-        starsSum = starsSum +review.getStars();
-        this.stars= Math.round(starsSum/this.reviews.size());
+        this.reviews = new ArrayList<Review>();
     }
 
     @Override
