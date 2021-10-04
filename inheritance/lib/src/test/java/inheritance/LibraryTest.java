@@ -41,4 +41,9 @@ class LibraryTest {
         assertEquals(res2.getStars(),1);
 
     }
+    @Test
+    void shopTesting(){
+        Shop Zad = new Shop("Zad", "Good", 3);
+        assertEquals(Zad.getName(),"Zad");
+    }
 }
