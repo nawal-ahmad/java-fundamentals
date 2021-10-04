@@ -17,3 +17,7 @@ Nawal Ahmad Abu-alShaik
 - analyzingWeatherData(int[][] arr)
 - tally(List<String> votes)
 
+**inheritance**
+- Restaurant class
+- Review class
+- addReview method
